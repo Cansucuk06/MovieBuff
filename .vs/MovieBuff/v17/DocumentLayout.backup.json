@@ -7,16 +7,8 @@
       "RelativeMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|solutionrelative:moviebuff\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|c:\\users\\cansu\\source\\repos\\moviebuff\\moviebuff\\models\\watchlater.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|solutionrelative:moviebuff\\models\\watchlater.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|c:\\users\\cansu\\source\\repos\\moviebuff\\moviebuff\\models\\rating.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|solutionrelative:moviebuff\\models\\rating.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|c:\\users\\cansu\\source\\repos\\moviebuff\\moviebuff\\models\\favorite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|solutionrelative:moviebuff\\models\\favorite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|c:\\users\\cansu\\source\\repos\\moviebuff\\moviebuff\\models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|solutionrelative:moviebuff\\models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,8 +18,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ApplicationUser.cs",
+              "DocumentMoniker": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Models\\ApplicationUser.cs",
+              "RelativeDocumentMoniker": "MovieBuff\\Models\\ApplicationUser.cs",
+              "ToolTip": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Models\\ApplicationUser.cs",
+              "RelativeToolTip": "MovieBuff\\Models\\ApplicationUser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-01T03:44:35.535Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -36,48 +41,9 @@
               "RelativeDocumentMoniker": "MovieBuff\\Views\\Shared\\_Layout.cshtml",
               "ToolTip": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "MovieBuff\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAoAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-31T15:11:01.472Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "WatchLater.cs",
-              "DocumentMoniker": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Models\\WatchLater.cs",
-              "RelativeDocumentMoniker": "MovieBuff\\Models\\WatchLater.cs",
-              "ToolTip": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Models\\WatchLater.cs",
-              "RelativeToolTip": "MovieBuff\\Models\\WatchLater.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T11:47:47.096Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Rating.cs",
-              "DocumentMoniker": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Models\\Rating.cs",
-              "RelativeDocumentMoniker": "MovieBuff\\Models\\Rating.cs",
-              "ToolTip": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Models\\Rating.cs",
-              "RelativeToolTip": "MovieBuff\\Models\\Rating.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T11:44:13.744Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Favorite.cs",
-              "DocumentMoniker": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Models\\Favorite.cs",
-              "RelativeDocumentMoniker": "MovieBuff\\Models\\Favorite.cs",
-              "ToolTip": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Models\\Favorite.cs",
-              "RelativeToolTip": "MovieBuff\\Models\\Favorite.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T11:21:35.28Z",
+              "WhenOpened": "2025-11-01T03:28:59.646Z",
               "EditorCaption": ""
             }
           ]
