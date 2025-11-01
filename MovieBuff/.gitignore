@@ -1,0 +1,21 @@
+﻿# Visual Studio ve .NET Core için standart .gitignore dosyası
+
+## Derleme çıktıları
+[Bb]in/
+[Oo]bj/
+
+## Visual Studio'ya özel dosyalar (EN ÖNEMLİSİ BU)
+.vs/
+*.user
+*.userosscache
+*.suo
+
+## Diğerleri
+*.nupkg
+*.bak
+*.sln.docstates
+
+## Hassas ayar dosyaları
+appsettings.Development.json
+secrets.json
+user-secrets/

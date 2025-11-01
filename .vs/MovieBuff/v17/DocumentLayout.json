@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|c:\\users\\cansu\\source\\repos\\moviebuff\\moviebuff\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|solutionrelative:moviebuff\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": ".gitignore",
+              "DocumentMoniker": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\.gitignore",
+              "RelativeDocumentMoniker": "MovieBuff\\.gitignore",
+              "ToolTip": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\.gitignore",
+              "RelativeToolTip": "MovieBuff\\.gitignore",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAwwA8AAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-11-01T00:59:35.85Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
