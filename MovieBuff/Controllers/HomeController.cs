@@ -1,26 +1,32 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MovieBuff.Models;
+using MovieBuff.Services;
+using MovieBuff.ViewModels;
 
 namespace MovieBuff.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IMovieService _movieService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IMovieService movieService)
         {
-            _logger = logger;
+            _movieService = movieService;
         }
-
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
+            var popularMoviesTask =  _movieService.GetPopularMoviesAsync();
+            var nowPlayingMoviesTask =  _movieService.GetNowPlayingMoviesAsync();
 
-        public IActionResult Privacy()
-        {
-            return View();
+            await Task.WhenAll(popularMoviesTask, nowPlayingMoviesTask);
+
+            var viewModel = new HomeIndexViewModel
+            {
+                NowPlayingMovies = await nowPlayingMoviesTask,
+                PopularMovies = await popularMoviesTask
+            };
+            return View(viewModel);
         }
     }
 }

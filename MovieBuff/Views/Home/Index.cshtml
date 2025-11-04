@@ -1,7 +1,118 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model MovieBuff.ViewModels.HomeIndexViewModel
+@{
+    ViewData["Title"] = "Ana Sayfa";
+    var imageBaseUrl = "https://image.tmdb.org/t/p/w500";
+    var backdropBaseUrl = "https://image.tmdb.org/t/p/original";
 }
-
-<div class="text-center">
-   
+<div class="container fluid mb-3">
+    <div class="text-left">
+        <h5>Son Eklenenler</h5>
+    </div>
+    <div class="d-flex align-items-center">
+        <div id="nowPlayingcarousel" class="carousel slide">
+            <div class="carousel-inner">
+                @if (Model.NowPlayingMovies != null && Model.NowPlayingMovies.Any())
+                {
+                    var movieGroup = Model.NowPlayingMovies.Select((movie, index) => new {movie, index})
+                                                            .GroupBy(x => x.index / 4)
+                                                            .Select(y => y.Select(x => x.movie).ToList());
+                    var firstmovieGroup = true;
+                    @foreach (var group in movieGroup)
+                    {
+                        <div class="carousel-item @(firstmovieGroup ? "active" : "")">
+                            <div class="row g-3">
+                                @foreach (var movie in group)
+                                {
+                                    <div class="col">
+                                        <div class="card w-100">
+                                            <img src="@(backdropBaseUrl + movie.BackdropPath)" class="d-block w-100" alt="@movie.Title" style="object-fit:cover ; max-height:400px" />
+                                            <div class="carousel-caption">
+                                                <h5>@movie.Title</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        firstmovieGroup = false;
+                    }
+                }
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#nowPlayingcarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: invert(1) grayscale(100);"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#nowPlayingcarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true" style="filter: invert(1) grayscale(100);"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+            <h5 class="mb-3">Filtrele</h5>
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="genres" class="form-label">Tür</label>
+                        <select class="form-select" id="genres">
+                            <option value="">Tüm Türler</option>
+                            <option value="28">Aksiyon</option>
+                            <option value="12">Macera</option>
+                            <option value="16">Animasyon</option>
+                            <option value="35">Komedi</option>
+                            <option value="80">Suç</option>
+                            <option value="99">Belgesel</option>
+                            <option value="18">Dram</option>
+                            <option value="14">Fantastik</option>
+                            <option value="27">Korku</option>
+                            <option value="10749">Romantik</option>
+                            <option value="36">Tarih</option>
+                            <option value="878">Bilim Kurgu</option>
+                            <option value="53">Gerilim</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="year" class="form-label">Yıl</label>
+                        <input type="number" class="form-control" id="year"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="rating" class="form-label">Puan</label>
+                        <select class="form-select" id="rating">
+                            <option value="">Tümü</option>
+                            <option value="8">8+ Puan</option>
+                            <option value="7">7+ Puan</option>
+                            <option value="6">6+ Puan</option>
+                            <option value="5">5+ Puan</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Filtrele</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                @if(Model.PopularMovies != null && Model.PopularMovies.Any())
+                {
+                    @foreach(var movie in Model.PopularMovies)
+                    {
+                        <div class="col-md-3 col-sm-3 mb-4">
+                            <div class="card h-100">
+                                <img src="@(imageBaseUrl + movie.PosterPath)" alt="@movie.Title"/>
+                                <div class="card-body">
+                                    <a class="card-title" href="#">@movie.Title</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <h5>Gösterilecek film bulunamadı.</h5>
+                }
+            </div>
+        </div>
+    </div>
 </div>
