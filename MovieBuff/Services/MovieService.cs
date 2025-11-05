@@ -1,4 +1,5 @@
-﻿using MovieBuff.DTOs;
+﻿using Microsoft.AspNetCore.Mvc;
+using MovieBuff.DTOs;
 using System.Text.Json;
 namespace MovieBuff.Services
 {
@@ -38,6 +39,18 @@ namespace MovieBuff.Services
                 return movieResponse?.Results ?? new List<MovieResultDto>();
             }
             return new List<MovieResultDto>();
+        }
+
+        public async Task<MovieDetailDto> GetMovieDetailsAsync(int movieId)
+        {
+            var response = await _httpClient.GetAsync($"https://api.themoviedb.org/3/movie/{movieId}?api_key={_apiKey}&language=en-US&append_to_response=credits");
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var movieDetails = JsonSerializer.Deserialize<MovieDetailDto>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                return movieDetails;
+            }
+            return null;
         }
     }
 }

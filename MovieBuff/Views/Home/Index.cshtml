@@ -102,7 +102,7 @@
                             <div class="card h-100">
                                 <img src="@(imageBaseUrl + movie.PosterPath)" alt="@movie.Title"/>
                                 <div class="card-body">
-                                    <a class="card-title" href="#">@movie.Title</a>
+                                    <a class="card-title" asp-controller="Film" asp-action="Details" asp-route-id="@movie.Id" >@movie.Title</a>
                                 </div>
                             </div>
                         </div>

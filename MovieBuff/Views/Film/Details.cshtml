@@ -1,6 +1,103 @@
-﻿namespace MovieBuff.Views.Film
-{
-    public class Details
+﻿@model MovieBuff.DTOs.MovieDetailDto
+@{
+    ViewData["Title"] = Model.Title;
+    var imageBaseUrl = "https://image.tmdb.org/t/p/w500"; 
+    var backdropBaseUrl = "https://image.tmdb.org/t/p/original";
+
+    var directorName = "Bilgi Yok";
+    var writerName = "Bilgi Yok";
+
+    if(Model.Credits != null && Model.Credits.Crew != null && Model.Credits.Crew.Any())
     {
+        var directors = Model.Credits.Crew.Where(d => d.Job == "Director").Select(d=> d.Name).ToList();
+        if(directors.Any())
+        {
+            directorName = string.Join(",", directors);
+        }
+        var writers = Model.Credits.Crew.Where(w => w.Job == "Writer" || w.Job == "Screenplay").Select(w => w.Name).ToList();
+        if(writers.Any())
+        {
+            writerName = string.Join(",", writers);
+        }
     }
+
 }
+<style>
+    body {
+        background-color: #1a1d29;
+        color: #fff;
+    }
+</style>
+<div class="container-fluid">
+    <div style="background-image: url('@(backdropBaseUrl + Model.BackdropPath)'); background-size: cover; background-position:center; position:relative; border-radius: 10px; height: 45%;">
+        <div style="background: linear-gradient(to top, rgba(16, 18, 27, 1) 0%, rgba(16, 18, 27, 0.6) 100%); padding-top: 200px; padding-bottom: 50px;">
+            <div class="container align-items-center text-white">
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <img src="@(imageBaseUrl+ Model.PosterPath)" style="max-width: 300px; border-radius: 12px;"/>
+                    </div>
+    
+                    <div class="col-md-8">
+                        <h1 class="text-white">@Model.Title</h1>
+                        <small class="text-white" style="font-size: 18px;">@Model.ReleaseDate.Substring(0, 4) - </small>
+                        
+                        @foreach(var genre in Model.Genres)
+                        {
+                            <small class="text-white" style="font-size: 18px;">@genre.Name</small>
+                        }
+                        <small class="text-white" style="font-size: 18px;">- @Model.Runtime dk</small>
+                        <h3 class="text-white">Özet</h3>
+                        <small class="mt-3" style="font-size: 18px;">@Model.Overview</small>
+                        <h3 class="text-white">Oyuncular</h3>
+                        <div class="row mb-3">
+                            @if(Model.Credits != null && Model.Credits.Cast != null && Model.Credits.Cast.Any())
+                            {
+                                @foreach (var castMember in Model.Credits.Cast.Take(5))
+                                {
+                                    <div class="col-md-2">
+                                        <div class="card bg-transparent border-0">
+                                            @if (!string.IsNullOrEmpty(castMember.ProfilePath))
+                                            {
+                                                <img src="@(imageBaseUrl + castMember.ProfilePath)" class="rounded-circle mb-2"/>
+                                            }
+                                            else
+                                            {
+                                                <img src="/images/default-profile.webp" class="rounded-circle mb-2" />
+                                            }
+                                            <strong class="mb-1" style="color: white;">@castMember.Name</strong>
+                                            <small class="mb-1" style="color: white;">@castMember.Character</small>
+                                        </div>
+                                    </div>
+                                } 
+                            }
+                            else
+                            {
+                                <div class="col">
+                                    <h5>Bu film için oyuncu bilgisi bulunamadı.</h5>
+                                </div>
+                            }
+                            
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <h3 class="text-white">Yönetmen:</h3>
+                                <h5 class="text-white" style="font-weight: lighter;">@directorName</h5>
+                            </div>
+                            <div class="col">
+                                <h3 class="text-white">Senarist:</h3>
+                                <h5 class="text-white" style="font-weight: lighter;">@writerName</h5>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h3>IMDB Puanı</h3>
+                                <h5 class="text-white"><i class="fa-solid fa-star" style="color: blue;"></i>@Model.VoteAverage.ToString("0.0")/10</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
