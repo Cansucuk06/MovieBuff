@@ -1,4 +1,6 @@
-﻿@model MovieBuff.DTOs.MovieDetailDto
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@model MovieBuff.DTOs.MovieDetailDto
 @{
     ViewData["Title"] = Model.Title;
     var imageBaseUrl = "https://image.tmdb.org/t/p/w500"; 
@@ -47,7 +49,15 @@
                         }
                         <small class="text-white" style="font-size: 18px;">- @Model.Runtime dk</small>
                         <h3 class="text-white">Özet</h3>
-                        <small class="mt-3" style="font-size: 18px;">@Model.Overview</small>
+                        <small class="mb-3" style="font-size: 18px;">@Model.Overview</small>
+                        <div class="row mt-3">
+                            <div class="col">
+                                <button id="favoriteBtn" class="btn btn-primary btn-lg" data-filmid="@Model.Id" style="width: 95%;"><i class="fa-solid fa-heart"></i>  Favorilere Ekle</button>
+                            </div>
+                            <div class="col">
+                                <button id="watchlaterBtn" class="btn btn-secondary btn-lg" data-filmid="@Model.Id" style="width: 95%;"><i class="fa-regular fa-clock"></i>  Daha Sonra İzle</button>
+                            </div>
+                        </div>
                         <h3 class="text-white">Oyuncular</h3>
                         <div class="row mb-3">
                             @if(Model.Credits != null && Model.Credits.Cast != null && Model.Credits.Cast.Any())
@@ -94,6 +104,17 @@
                                 <h5 class="text-white"><i class="fa-solid fa-star" style="color: blue;"></i>@Model.VoteAverage.ToString("0.0")/10</h5>
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <h3 class="text-white">Puan Ver</h3>
+                            <div id="star-rating" data-filmid="@Model.Id">
+                                <i class="star fa-regular fa-star" data-value="1"></i>
+                                <i class="star fa-regular fa-star" data-value="2"></i>
+                                <i class="star fa-regular fa-star" data-value="3"></i>
+                                <i class="star fa-regular fa-star" data-value="4"></i>
+                                <i class="star fa-regular fa-star" data-value="5"></i>
+                            </div>
+                            <div id="ratingMessage" class="mt-2"></div>
+                        </div>   
                     </div>
                 </div>
                 
@@ -101,3 +122,91 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <script>
+        $(document).ready(function(){
+            var filmId = $('.star-rating').data('filmid');
+            var isAuthenticated = @SignInManager.IsSignedIn(User).ToString().ToLower();
+            var ratingMessageDiv = $('#ratingMessage');
+            var stars = $('#star-rating .star');
+            
+
+            stars.on('click', function(){
+                if(!checkAuthentication()) return;
+                var ratingValue = $(this).data('value');
+                $('#star-rating').data('selected-value',ratingValue);
+                highlightStars(ratingValue);
+                $.ajax({
+                    url: '/api/Interactions/RateMovie',
+                    type: "POST",
+                    contentType: 'application/json',
+                    data: JSON.stringify({ filmId: filmId, rating: ratingValue }),
+                    success: function(response){
+                        ratingMessageDiv.text(response.message).removeClass('text-danger').addClass('text-success');
+                    },
+                    error: function(){
+                        ratingMessageDiv.text("Bir hata oluştu.").removeClass('text-success').addClass('text-danger');
+                    }
+                });
+            });
+
+            $("#favoriteBtn").click(function(){
+                if (!checkAuthentication()) return;
+                $.ajax({
+                    url: '/api/Interactions/HandleFavorites',
+                    type: "POST",
+                    contentType: 'application/json',
+                    data: JSON.stringify({ filmId: filmId }),
+                    success: function(response){
+                        alert(response.message);
+                    },
+                    error: function(xhr){
+                        alert("Bir hata oluştu.");
+                    }
+                })
+            });
+
+            $("#watchlaterBtn").click(function(){
+                if (!checkAuthentication()) return;
+                $.ajax({
+                    url: '/api/Interactions/HandleWatchLaters',
+                    type: "POST",
+                    contentType: 'application/json',
+                    data: JSON.stringify({ filmId: filmId }),
+                    success:function(response){
+                        alert(response.message);
+                    },
+                    error: function(xhr){
+                        alert("Bir hata oluştu.");
+                    }
+                })
+            });
+
+            function highlightStars(value){
+                stars.each(function(){
+                    var starValue = $(this).data('value');
+                    if(starValue <= value){
+                        $(this).addClass('selected').removeClass('fa-regular').addClass('fa-solid');
+                    } else {
+                        $(this).removeClass('selected').removeClass('fa-solid').addClass('fa-regular');
+                    }
+                });
+            }
+
+            function checkAuthentication(){
+                if(!isAuthenticated){
+                    var loginUrl = "@Url.Action("Login", "Account")";
+                    var currentUrl = window.location.pathname + window.location.search;
+                    var loginUrl = '@Url.Action("Login", "Account")' + `?returnUrl=${encodeURIComponent(currentUrl)}`;
+                    var registerUrl = '@Url.Action("Register", "Account")' + `?returnUrl=${encodeURIComponent(currentUrl)}`;
+                    var message = `Bu özelliği kullanabilmemiz için lütfen <a href="${loginUrl}">giriş yapın</a> veya <a href="${registerUrl}">kayıt olun</a>.`;
+                    $('#alertMessage').html(message);
+                    var alertModal = new bootstrap.Modal(document.getElementById('alertModal'));
+                    alertModal.show();
+                    return false;
+                }
+                return true;
+            }
+        });
+    </script>
+}
