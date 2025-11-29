@@ -1,0 +1,72 @@
+﻿@model MovieBuff.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Panelim";
+    var imageBaseUrl = "https://image.tmdb.org/t/p/w500";
+}
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+    <div class="row">
+        <h5 class="mt-5">Daha Sonra İzle</h5>
+        @if (Model.WatchLaterMovies != null && Model.WatchLaterMovies.Any())
+        {
+            <div class="row">
+                @foreach(var movie in Model.WatchLaterMovies)
+                {
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100">
+                            <img src="@(imageBaseUrl + movie.PosterPath)" class="img-fluid rounded" alt="@movie.Title">
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p>Henüz daha sonra izle listesine eklenmiş filminiz bulunmuyor.</p>
+        }
+    </div>
+    <div class="row">
+        <h5 class="mt-5">Favorilerim</h5>
+        @if (Model.FavoriteMovies != null && Model.FavoriteMovies.Any())
+        {
+            <div class="row">
+                @foreach (var movie in Model.FavoriteMovies)
+                {
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100">
+                            <img src="@(imageBaseUrl + movie.PosterPath)" class="img-fluid rounded" alt="@movie.Title">
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p>Henüz favorilerim listesine eklenmiş filminiz bulunmuyor.</p>
+        }
+    </div>
+    <div class="row">
+       <div class="col-4">
+            <h5 class="mt-5">Listelerim</h5>
+       </div>
+       <div class="col-8">
+            <h5 class="mt-5">Puanlamalarım</h5>
+            @if(Model.LastRatings != null && Model.LastRatings.Any())
+            {
+                <div class="list-group">
+                    @foreach(var rating in Model.LastRatings)
+                    {
+                        <a asp-controller="Film" asp-action="Details" asp-route-id="@rating.Movie.Id" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            @rating.Movie.Title
+                            <span class="badge bg-warning rounded-pill text-dark">Verdiğiniz Puan: @rating.Score / 10</span>
+                        </a>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info">Henüz bir filmi puanlamadınız.</div>
+            }
+       </div>
+    </div>
+</div>

@@ -105,7 +105,8 @@ namespace MovieBuff.Controllers
                 var rating = new Rating
                 {
                     UserId = userId,
-                    FilmId = request.MovieId
+                    FilmId = request.MovieId,
+                    Score= request.Rating
                 };
                 _context.Ratings.Add(rating);
                 

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MovieBuff.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class LastCreation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -197,12 +197,6 @@ namespace MovieBuff.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Favorites_Films_FilmId",
-                        column: x => x.FilmId,
-                        principalTable: "Films",
-                        principalColumn: "FilmId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -224,12 +218,6 @@ namespace MovieBuff.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Ratings_Films_FilmId",
-                        column: x => x.FilmId,
-                        principalTable: "Films",
-                        principalColumn: "FilmId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -249,12 +237,6 @@ namespace MovieBuff.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_WatchLaters_Films_FilmId",
-                        column: x => x.FilmId,
-                        principalTable: "Films",
-                        principalColumn: "FilmId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -298,29 +280,14 @@ namespace MovieBuff.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Favorites_FilmId",
-                table: "Favorites",
-                column: "FilmId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Favorites_UserId",
                 table: "Favorites",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ratings_FilmId",
-                table: "Ratings",
-                column: "FilmId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Ratings_UserId",
                 table: "Ratings",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_WatchLaters_FilmId",
-                table: "WatchLaters",
-                column: "FilmId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WatchLaters_UserId",
@@ -350,6 +317,9 @@ namespace MovieBuff.Migrations
                 name: "Favorites");
 
             migrationBuilder.DropTable(
+                name: "Films");
+
+            migrationBuilder.DropTable(
                 name: "Ratings");
 
             migrationBuilder.DropTable(
@@ -360,9 +330,6 @@ namespace MovieBuff.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Films");
         }
     }
 }

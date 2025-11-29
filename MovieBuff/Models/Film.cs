@@ -19,9 +19,5 @@ namespace MovieBuff.Models
         public double ImdbRating { get; set; }
         public string? Director { get; set; }
         public string? Cast { get; set; }
-
-        public ICollection<Favorite> Favorites { get; set; }
-        public ICollection<Rating> Ratings { get; set; }
-        public ICollection<WatchLater> WatchLaters { get; set; }
     }
 }

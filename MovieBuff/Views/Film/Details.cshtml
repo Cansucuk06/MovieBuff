@@ -125,7 +125,6 @@
 @section Scripts {
     <script>
         $(document).ready(function(){
-            var filmId = $('.star-rating').data('filmid');
             var isAuthenticated = @SignInManager.IsSignedIn(User).ToString().ToLower();
             var ratingMessageDiv = $('#ratingMessage');
             var stars = $('#star-rating .star');
@@ -133,11 +132,17 @@
 
             stars.on('click', function(){
                 if(!checkAuthentication()) return;
+                var filmId = $(this).data('filmid');
+                if (!filmId || filmId == 0) 
+                {
+                    alert("Film ID'si bulunamadı. Lütfen sayfayı yenileyip tekrar deneyin.");
+                    return;
+                }
                 var ratingValue = $(this).data('value');
                 $('#star-rating').data('selected-value',ratingValue);
                 highlightStars(ratingValue);
                 $.ajax({
-                    url: '/api/Interactions/RateMovie',
+                    url: '/api/Interactions/RateMovies',
                     type: "POST",
                     contentType: 'application/json',
                     data: JSON.stringify({ filmId: filmId, rating: ratingValue }),
@@ -152,6 +157,12 @@
 
             $("#favoriteBtn").click(function(){
                 if (!checkAuthentication()) return;
+                var filmId = $(this).data('filmid');
+                if (!filmId || filmId == 0)
+                {
+                    alert("Film ID'si bulunamadı. Lütfen sayfayı yenileyip tekrar deneyin.");
+                    return;
+                }
                 $.ajax({
                     url: '/api/Interactions/HandleFavorites',
                     type: "POST",
@@ -168,6 +179,12 @@
 
             $("#watchlaterBtn").click(function(){
                 if (!checkAuthentication()) return;
+                var filmId = $(this).data('filmid');
+                if (!filmId || filmId == 0)
+                {
+                    alert("Film ID'si bulunamadı. Lütfen sayfayı yenileyip tekrar deneyin.");
+                    return;
+                }
                 $.ajax({
                     url: '/api/Interactions/HandleWatchLaters',
                     type: "POST",

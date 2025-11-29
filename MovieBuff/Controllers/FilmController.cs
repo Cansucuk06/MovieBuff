@@ -11,14 +11,14 @@ namespace MovieBuff.Controllers
             _movieService = movieService;
         }
 
-        public async Task<IActionResult> Details(int Id)
+        public async Task<IActionResult> Details(int id)
         {
-            if(Id == 0)
+            if(id == 0)
             {
                 return BadRequest("Geçersiz bir id girdiniz.");
             }
 
-            var movie = await _movieService.GetMovieDetailsAsync(Id);
+            var movie = await _movieService.GetMovieDetailsAsync(id);
             
             if(movie == null)
             {

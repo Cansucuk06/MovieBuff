@@ -247,8 +247,6 @@ namespace MovieBuff.Migrations
 
                     b.HasKey("FavoriteId");
 
-                    b.HasIndex("FilmId");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Favorites");
@@ -315,8 +313,6 @@ namespace MovieBuff.Migrations
 
                     b.HasKey("RatingId");
 
-                    b.HasIndex("FilmId");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Ratings");
@@ -338,8 +334,6 @@ namespace MovieBuff.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("WatchLaterId");
-
-                    b.HasIndex("FilmId");
 
                     b.HasIndex("UserId");
 
@@ -399,68 +393,35 @@ namespace MovieBuff.Migrations
 
             modelBuilder.Entity("MovieBuff.Models.Favorite", b =>
                 {
-                    b.HasOne("MovieBuff.Models.Film", "Film")
-                        .WithMany("Favorites")
-                        .HasForeignKey("FilmId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("MovieBuff.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Film");
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("MovieBuff.Models.Rating", b =>
                 {
-                    b.HasOne("MovieBuff.Models.Film", "Film")
-                        .WithMany("Ratings")
-                        .HasForeignKey("FilmId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("MovieBuff.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Film");
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("MovieBuff.Models.WatchLater", b =>
                 {
-                    b.HasOne("MovieBuff.Models.Film", "Film")
-                        .WithMany("WatchLaters")
-                        .HasForeignKey("FilmId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("MovieBuff.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Film");
-
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("MovieBuff.Models.Film", b =>
-                {
-                    b.Navigation("Favorites");
-
-                    b.Navigation("Ratings");
-
-                    b.Navigation("WatchLaters");
                 });
 #pragma warning restore 612, 618
         }
