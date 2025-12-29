@@ -1,22 +1,22 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
-@model MovieBuff.DTOs.MovieDetailDto
+@model MovieBuff.ViewModels.MovieDetailViewModel
 @{
-    ViewData["Title"] = Model.Title;
+    ViewData["Title"] = Model.Movie.Title;
     var imageBaseUrl = "https://image.tmdb.org/t/p/w500"; 
     var backdropBaseUrl = "https://image.tmdb.org/t/p/original";
 
     var directorName = "Bilgi Yok";
     var writerName = "Bilgi Yok";
 
-    if(Model.Credits != null && Model.Credits.Crew != null && Model.Credits.Crew.Any())
+    if(Model.Movie.Credits != null && Model.Movie.Credits.Crew != null && Model.Movie.Credits.Crew.Any())
     {
-        var directors = Model.Credits.Crew.Where(d => d.Job == "Director").Select(d=> d.Name).ToList();
+        var directors = Model.Movie.Credits.Crew.Where(d => d.Job == "Director").Select(d=> d.Name).ToList();
         if(directors.Any())
         {
             directorName = string.Join(",", directors);
         }
-        var writers = Model.Credits.Crew.Where(w => w.Job == "Writer" || w.Job == "Screenplay").Select(w => w.Name).ToList();
+        var writers = Model.Movie.Credits.Crew.Where(w => w.Job == "Writer" || w.Job == "Screenplay").Select(w => w.Name).ToList();
         if(writers.Any())
         {
             writerName = string.Join(",", writers);
@@ -31,38 +31,30 @@
     }
 </style>
 <div class="container-fluid">
-    <div style="background-image: url('@(backdropBaseUrl + Model.BackdropPath)'); background-size: cover; background-position:center; position:relative; border-radius: 10px; height: 45%;">
+    <div style="background-image: url('@(backdropBaseUrl + Model.Movie.BackdropPath)'); background-size: cover; background-position:center; position:relative; border-radius: 10px; height: 45%;">
         <div style="background: linear-gradient(to top, rgba(16, 18, 27, 1) 0%, rgba(16, 18, 27, 0.6) 100%); padding-top: 200px; padding-bottom: 50px;">
             <div class="container align-items-center text-white">
                 <div class="row mb-3">
                     <div class="col-md-4">
-                        <img src="@(imageBaseUrl+ Model.PosterPath)" style="max-width: 300px; border-radius: 12px;"/>
+                        <img src="@(imageBaseUrl+ Model.Movie.PosterPath)" style="max-width: 300px; border-radius: 12px;"/>
                     </div>
     
                     <div class="col-md-8">
-                        <h1 class="text-white">@Model.Title</h1>
-                        <small class="text-white" style="font-size: 18px;">@Model.ReleaseDate.Substring(0, 4) - </small>
+                        <h1 class="text-white">@Model.Movie.Title</h1>
+                        <small class="text-white" style="font-size: 18px;">@Model.Movie.ReleaseDate.Substring(0, 4) - </small>
                         
-                        @foreach(var genre in Model.Genres)
+                        @foreach(var genre in Model.Movie.Genres)
                         {
                             <small class="text-white" style="font-size: 18px;">@genre.Name</small>
                         }
-                        <small class="text-white" style="font-size: 18px;">- @Model.Runtime dk</small>
+                        <small class="text-white" style="font-size: 18px;">- @Model.Movie.Runtime dk</small>
                         <h3 class="text-white">Özet</h3>
-                        <small class="mb-3" style="font-size: 18px;">@Model.Overview</small>
-                        <div class="row mt-3">
-                            <div class="col">
-                                <button id="favoriteBtn" class="btn btn-primary btn-lg" data-filmid="@Model.Id" style="width: 95%;"><i class="fa-solid fa-heart"></i>  Favorilere Ekle</button>
-                            </div>
-                            <div class="col">
-                                <button id="watchlaterBtn" class="btn btn-secondary btn-lg" data-filmid="@Model.Id" style="width: 95%;"><i class="fa-regular fa-clock"></i>  Daha Sonra İzle</button>
-                            </div>
-                        </div>
+                        <small class="mb-3" style="font-size: 18px;">@Model.Movie.Overview</small>
                         <h3 class="text-white">Oyuncular</h3>
                         <div class="row mb-3">
-                            @if(Model.Credits != null && Model.Credits.Cast != null && Model.Credits.Cast.Any())
+                            @if(Model.Movie.Credits != null && Model.Movie.Credits.Cast != null && Model.Movie.Credits.Cast.Any())
                             {
-                                @foreach (var castMember in Model.Credits.Cast.Take(5))
+                                @foreach (var castMember in Model.Movie.Credits.Cast.Take(5))
                                 {
                                     <div class="col-md-2">
                                         <div class="card bg-transparent border-0">
@@ -101,20 +93,51 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <h3>IMDB Puanı</h3>
-                                <h5 class="text-white"><i class="fa-solid fa-star" style="color: blue;"></i>@Model.VoteAverage.ToString("0.0")/10</h5>
+                                <h5 class="text-white"><i class="fa-solid fa-star" style="color: blue;"></i>@Model.Movie.VoteAverage.ToString("0.0")/10</h5>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <h3 class="text-white">Puan Ver</h3>
-                            <div id="star-rating" data-filmid="@Model.Id">
-                                <i class="star fa-regular fa-star" data-value="1"></i>
-                                <i class="star fa-regular fa-star" data-value="2"></i>
-                                <i class="star fa-regular fa-star" data-value="3"></i>
-                                <i class="star fa-regular fa-star" data-value="4"></i>
-                                <i class="star fa-regular fa-star" data-value="5"></i>
-                            </div>
-                            <div id="ratingMessage" class="mt-2"></div>
-                        </div>   
+                        <div class="row mt-3">
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <div class="col">
+                                    @if (Model.IsFavorite)
+                                    {
+                                        <button id="favoriteBtn" class="btn btn-danger" data-filmid="@Model.Movie.Id" data-action="remove">Favorilerden Kaldır</button>
+                                    }
+                                    else
+                                    {
+                                        <button id="favoriteBtn" class="btn btn-primary" data-filmid="@Model.Movie.Id" data-action="add"><i class="fa-solid fa-heart"></i>  Favorilere Ekle</button>
+
+                                    }
+                                </div>
+                               
+                                <div class="col">
+                                    @if (Model.IsInWatchLater)
+                                    {
+                                        <button id="watchLaterBtn" class="btn btn-secondary" data-filmid="@Model.Movie.Id" data-action="remove"><i class="fa-regular fa-clock"></i>  Daha Sonra İzleden Kaldır</button>
+                                    }
+                                    else
+                                    {
+                                        <button id="watchLaterBtn" class="btn btn-danger" data-filmid="@Model.Movie.Id" data-action="add"> <i class="fa-regular fa-clock"></i>Daha Sonra İzle</button>
+                                    }
+                                </div>
+
+                                <div class="row mb-3">
+                                    <h3 class="text-white">Puan Ver</h3>
+                                    <div id="star-rating" data-filmid="@Model.Movie.Id" data-current-rating="@Model.UserRating">
+                                        @for(int a = 1; a <= 10; a++)
+                                        {
+                                            <i class="star @(Model.UserRating >=a ? "fa-solid" : "fa-regular") fa-star" data-value="@a"></i>
+                                        }
+                                    </div>
+                                    <button id="removeRatingBtn" class="btn btn-sm btn-outline-danger mt-2 @(Model.UserRating == null ? "d-none" : "")">Puanı Kaldır</button>
+                                    <div id="ratingMessage" class="mt-2"></div>
+                                </div>
+                            }
+                            
+                            
+                        </div>
+                        
                     </div>
                 </div>
                 
@@ -124,106 +147,106 @@
 </div>
 @section Scripts {
     <script>
-        $(document).ready(function(){
-            var isAuthenticated = @SignInManager.IsSignedIn(User).ToString().ToLower();
-            var ratingMessageDiv = $('#ratingMessage');
-            var stars = $('#star-rating .star');
+        $(document).ready(function() {
+
+            $("#favoriteBtn").click(function() {
+                var button = $(this);
+                var filmId = button.data('filmid');
+                var action = button.data('action');
+                var apiUrl = '/api/Interactions/Favorites';
+                var httpMethod = (action === 'add') ? 'POST' : 'DELETE';
+                if (action === 'remove') {
+                    apiUrl += '/' + filmId;
+                }
+
+                $.ajax({
+                    url: apiUrl,
+                    type: httpMethod,
+                    contentType: 'application/json',
+                    data: JSON.stringify({ movieId: filmId }),
+                    success: function() {
+                        if (action === 'add') {
+                            button.text('Favorilerden Çıkar ✔').removeClass('btn-danger').addClass('btn-success').data('action', 'remove');
+                        } else {
+                            button.text('Favorilere Ekle ❤️').removeClass('btn-success').addClass('btn-danger').data('action', 'add');
+                        }
+                    },
+                    error: function(xhr) { alert("Hata: " + xhr.responseText); }
+                });
+            });
+
             
-
-            stars.on('click', function(){
-                if(!checkAuthentication()) return;
-                var filmId = $(this).data('filmid');
-                if (!filmId || filmId == 0) 
-                {
-                    alert("Film ID'si bulunamadı. Lütfen sayfayı yenileyip tekrar deneyin.");
-                    return;
+            $("#watchLaterBtn").click(function() {
+                var button = $(this);
+                var filmId = button.data('filmid');
+                var action = button.data('action');
+                var apiUrl = '/api/Interactions/WatchLaters';
+                var httpMethod = (action === 'add') ? 'POST' : 'DELETE';
+                if (action === 'remove') {
+                    apiUrl += '/' + filmId;
                 }
-                var ratingValue = $(this).data('value');
-                $('#star-rating').data('selected-value',ratingValue);
-                highlightStars(ratingValue);
+
                 $.ajax({
-                    url: '/api/Interactions/RateMovies',
-                    type: "POST",
+                    url: apiUrl,
+                    type: httpMethod,
                     contentType: 'application/json',
-                    data: JSON.stringify({ filmId: filmId, rating: ratingValue }),
-                    success: function(response){
-                        ratingMessageDiv.text(response.message).removeClass('text-danger').addClass('text-success');
+                    data: JSON.stringify({ movieId: filmId }),
+                    success: function() {
+                        if (action === 'add') {
+                            button.text('İzleme Listesinden Çıkar ✔').removeClass('btn-info').addClass('btn-success').data('action', 'remove');
+                        } else {
+                            button.text('Sonra İzle 🕒').removeClass('btn-success').addClass('btn-info').data('action', 'add');
+                        }
                     },
-                    error: function(){
-                        ratingMessageDiv.text("Bir hata oluştu.").removeClass('text-success').addClass('text-danger');
-                    }
+                    error: function(xhr) { alert("Hata: " + xhr.responseText); }
                 });
             });
 
-            $("#favoriteBtn").click(function(){
-                if (!checkAuthentication()) return;
-                var filmId = $(this).data('filmid');
-                if (!filmId || filmId == 0)
-                {
-                    alert("Film ID'si bulunamadı. Lütfen sayfayı yenileyip tekrar deneyin.");
-                    return;
-                }
-                $.ajax({
-                    url: '/api/Interactions/HandleFavorites',
-                    type: "POST",
-                    contentType: 'application/json',
-                    data: JSON.stringify({ filmId: filmId }),
-                    success: function(response){
-                        alert(response.message);
-                    },
-                    error: function(xhr){
-                        alert("Bir hata oluştu.");
-                    }
-                })
-            });
-
-            $("#watchlaterBtn").click(function(){
-                if (!checkAuthentication()) return;
-                var filmId = $(this).data('filmid');
-                if (!filmId || filmId == 0)
-                {
-                    alert("Film ID'si bulunamadı. Lütfen sayfayı yenileyip tekrar deneyin.");
-                    return;
-                }
-                $.ajax({
-                    url: '/api/Interactions/HandleWatchLaters',
-                    type: "POST",
-                    contentType: 'application/json',
-                    data: JSON.stringify({ filmId: filmId }),
-                    success:function(response){
-                        alert(response.message);
-                    },
-                    error: function(xhr){
-                        alert("Bir hata oluştu.");
-                    }
-                })
-            });
-
-            function highlightStars(value){
-                stars.each(function(){
+            function highlightStars(ratingValue) {
+                $('#star-rating .star').each(function() {
                     var starValue = $(this).data('value');
-                    if(starValue <= value){
-                        $(this).addClass('selected').removeClass('fa-regular').addClass('fa-solid');
+                    if (starValue <= ratingValue) {
+                        $(this).removeClass('fa-regular').addClass('fa-solid');
                     } else {
-                        $(this).removeClass('selected').removeClass('fa-solid').addClass('fa-regular');
+                        $(this).removeClass('fa-solid').addClass('fa-regular');
                     }
                 });
             }
+            var ratingContainer = $('#star-rating');
+            var filmId = ratingContainer.data('filmid');
 
-            function checkAuthentication(){
-                if(!isAuthenticated){
-                    var loginUrl = "@Url.Action("Login", "Account")";
-                    var currentUrl = window.location.pathname + window.location.search;
-                    var loginUrl = '@Url.Action("Login", "Account")' + `?returnUrl=${encodeURIComponent(currentUrl)}`;
-                    var registerUrl = '@Url.Action("Register", "Account")' + `?returnUrl=${encodeURIComponent(currentUrl)}`;
-                    var message = `Bu özelliği kullanabilmemiz için lütfen <a href="${loginUrl}">giriş yapın</a> veya <a href="${registerUrl}">kayıt olun</a>.`;
-                    $('#alertMessage').html(message);
-                    var alertModal = new bootstrap.Modal(document.getElementById('alertModal'));
-                    alertModal.show();
-                    return false;
-                }
-                return true;
-            }
+            ratingContainer.find('.star').click(function() {
+                var newRating = $(this).data('value');
+                var currentRating = ratingContainer.data('current-rating');
+                var httpMethod = (currentRating) ? 'PUT' : 'POST'; 
+
+                $.ajax({
+                    url: '/api/Interactions/Ratings',
+                    type: httpMethod,
+                    contentType: 'application/json',
+                    data: JSON.stringify({ movieId: filmId, rating: newRating }),
+                    success: function() {
+                        ratingContainer.data('current-rating', newRating);
+                        $('#removeRatingBtn').removeClass('d-none')
+
+                        highlightStars(newRating);
+                    },
+                    error: function(xhr) { alert("Hata: " + xhr.responseText); }
+                });
+            });
+
+            $('#removeRatingBtn').click(function() {
+                $.ajax({
+                    url: '/api/Interactions/Ratings/' + filmId,
+                    type: 'DELETE',
+                    success: function() {
+                        ratingContainer.data('current-rating', '');
+                        $('#removeRatingBtn').addClass('d-none');
+                        highlightStars(0);
+                    },
+                    error: function(xhr) { alert("Hata: " + xhr.responseText); }
+                });
+            });
         });
     </script>
 }

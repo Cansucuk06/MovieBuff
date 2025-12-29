@@ -1,0 +1,91 @@
+﻿@model MovieBuff.DTOs.PagedResult<MovieBuff.DTOs.MovieResultDto>
+@{
+    ViewData["Title"] = "Arama Sonuçları";
+    var imageBaseUrl = "https://image.tmdb.org/t/p/w500";
+}
+<h1>@ViewData["Title"]</h1>
+<hr />
+
+<div class="row mt-4">
+    @if (Model.Results != null && Model.Results.Any())
+    {
+        @foreach (var movie in Model.Results)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card h-100">
+                    <a asp-controller="Film" asp-action="Details" asp-route-id="@movie.Id">
+                        <img src="@(movie.PosterPath != null ? imageBaseUrl + movie.PosterPath : "/images/default-poster.png")" class="card-img-top" alt="@movie.Title" />
+                    </a>
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            <a asp-controller="Film" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-warning">Aradığınız kritere uygun film bulunamadı.</div>
+    }
+</div>
+
+@if (Model != null && Model.TotalPages > 1)
+{
+    var maxPage = Math.Min(Model.TotalPages, 500);
+    var currentPage = Model.Page;
+    var startPage = Math.Max(1, currentPage - 2);
+    var endPage = Math.Min(maxPage, currentPage + 2);
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center flex-wrap">
+
+            @if (currentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Search" asp-action="Results"
+                       asp-route-page="1"
+                       asp-route-query="@ViewBag.Query">İlk</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-action="Results"
+                       asp-route-page="@(currentPage - 1)"
+                       asp-route-query="@ViewBag.Query">&laquo;</a>
+                </li>
+            }
+
+            @if (startPage > 1)
+            {
+                <li class="page-item disabled"><span class="page-link">...</span></li>
+            }
+
+            @for (int i = startPage; i <= endPage; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" asp-action="Results"
+                       asp-route-page="@i"
+                       asp-route-query="@ViewBag.Query">@i</a>
+                </li>
+            }
+
+            @if (endPage < maxPage)
+            {
+                <li class="page-item disabled"><span class="page-link">...</span></li>
+            }
+
+            @if (currentPage < maxPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-action="Results"
+                       asp-route-page="@(currentPage + 1)"
+                       asp-route-query="@ViewBag.Query">&raquo;</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-action="Results"
+                       asp-route-page="@maxPage"
+                       asp-route-query="@ViewBag.Query">Son</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

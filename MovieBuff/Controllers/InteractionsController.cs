@@ -6,17 +6,6 @@ using MovieBuff.Models;
 using MovieBuff.Data;
 using System.Security.Claims;
 
-public class InteractionRequest
-{
-    public int MovieId { get; set;}
-}
-
-public class RatingRequest
-{
-    public int MovieId { get; set; }
-    public int Rating { get; set; }
-}
-
 namespace MovieBuff.Controllers
 {
     [Route("api/[controller]")]
@@ -37,89 +26,219 @@ namespace MovieBuff.Controllers
         {
             return User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
-
-        [HttpPost("HandleFavorites")]
-        public async Task<IActionResult> HandleFavorites(InteractionRequest request)
+        [HttpGet("Favorites")]
+        public async Task<IActionResult> GetFavorites()
         {
             var userId = GetUserId();
-            var inFavorites = await _context.Favorites
-                .FirstOrDefaultAsync(f => f.UserId == userId && f.FilmId == request.MovieId);
+            var favoriteFilmIds = await _context.Favorites
+                .Where(f => f.UserId == userId)
+                .Select(f => f.FilmId)
+                .ToListAsync();
+            return Ok(favoriteFilmIds);
+        }
+        [HttpGet("Favorites/{filmId}")]
+        public async Task<IActionResult> IsFavorite(int filmId)
+        {
+            var userId = GetUserId();
+            var isFavorite = await _context.Favorites
+                .AnyAsync(f => f.UserId == userId && f.FilmId == filmId);
 
-            if (inFavorites == null)
+            if (isFavorite)
             {
-                var Favorites = new Favorite
-                {
-                    UserId = userId,
-                    FilmId = request.MovieId
-                };
-
-                _context.Favorites.Add(Favorites);
-                await _context.SaveChangesAsync();
-                return Ok(new { success = true, action = "added", message = "Film favorilere eklendi." });
-
+                return Ok(new { isFavorite = true });
             }
-            else
-            {
-                _context.Favorites.Remove(inFavorites);
-                await _context.SaveChangesAsync();
-                return Ok(new { success = true, action = "removed", message = "Film favorilerden kaldırıldı." });
-            }
+            return NotFound(new { isFavorite = false });
+           
         }
 
-        [HttpPost("HandleWatchLaters")]
-        public async Task<IActionResult> HandleWatchLaters(InteractionRequest request)
+        [HttpPost("Favorites")]
+        public async Task<IActionResult> AddFavorite([FromBody] InteractionRequest request)
         {
             var userId = GetUserId();
-            var inWatchLater = await _context.WatchLaters
-                .FirstOrDefaultAsync(w => w.UserId == userId && w.FilmId == request.MovieId);
+            var exists = await _context.Favorites
+                .AnyAsync(f => f.UserId == userId && f.FilmId == request.MovieId);
 
-            if (inWatchLater == null)
+            if (exists)
             {
-                var watchLater = new WatchLater
-                {
-                    UserId = userId,
-                    FilmId = request.MovieId
-                };
+                return Conflict(new { success = false, message = "Film zaten favorilerinizde." });
+            }
+            var favorite = new Favorite
+            {
+                UserId = userId,
+                FilmId = request.MovieId
+            };
+            _context.Favorites.Add(favorite);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(IsFavorite), new { filmId = request.MovieId }, favorite);
+        }
+        [HttpDelete("Favorites/{filmId}")]
+        public async Task<IActionResult> RemoveFavorite(int filmId)
+        {
+            var userId = GetUserId();
+            var favorite = await _context.Favorites
+                .FirstOrDefaultAsync(f => f.UserId == userId && f.FilmId == filmId);
 
-                _context.WatchLaters.Add(watchLater);
-                await _context.SaveChangesAsync();
-                return Ok(new { success = true, action = "added", message = "Film daha sonra izle listesine eklendi." });
-            }
-            else
+            if (favorite== null)
             {
-                _context.WatchLaters.Remove(inWatchLater);
-                await _context.SaveChangesAsync();
-                return Ok(new { success = true, action = "removed", message = "Film daha sonra izel listesinden kaldırıldı." });
+                return NotFound(new { success = false, message = "Film favorilerinizde bulunamadı." });
             }
+            _context.Favorites.Remove(favorite);
+            await _context.SaveChangesAsync();
+            return NoContent();
         }
 
-        [HttpPost("RateMovies")]
-        public async Task<IActionResult> RateMovies(RatingRequest request)
+        [HttpGet("WatchLaters")]
+        public async Task<IActionResult> GetWatchLaters()
         {
             var userId = GetUserId();
-            var inRating = await _context.Ratings
+            var watchLaterFilmIds = await _context.WatchLaters
+                .Where(w=> w.UserId == userId)
+                .Select(w=> w.FilmId)
+                .ToListAsync();
+            return Ok(watchLaterFilmIds);
+        }
+        [HttpGet("WatchLaters/{filmId}")]
+        public async Task<IActionResult> IsWatchLater(int filmId)
+        {
+            var userId = GetUserId();
+            var isWatchLater = await _context.WatchLaters
+                .AnyAsync(w => w.UserId == userId && w.FilmId == filmId);
+
+            if (isWatchLater)
+            {
+                return Ok(new { isWatchLater = true });
+            }
+            return NotFound(new { isWatchLater = false });
+        }
+        [HttpPost("WatchLaters")]
+        public async Task<IActionResult> AddWatchLater([FromBody] InteractionRequest request)
+        {
+            var userId = GetUserId();
+            var exists = await _context.WatchLaters
+                .AnyAsync(w => w.UserId == userId && w.FilmId == request.MovieId);
+
+            if(exists)
+            {
+                return Conflict(new { success = false, message = "Film zaten izleme listenizde." });
+            }
+            var WatchLater = new WatchLater
+            {
+                UserId = userId,
+                FilmId = request.MovieId
+            };
+            _context.WatchLaters.Add(WatchLater);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetWatchLaters), new { filmId = request.MovieId }, WatchLater);
+        }
+
+        [HttpDelete("WatchLaters/{filmId}")]
+        public async Task<IActionResult> RemoveWatchLater(int filmId)
+        {
+            var userId = GetUserId();
+            var watchLater = await _context.WatchLaters
+                .FirstOrDefaultAsync(w => w.UserId == userId && w.FilmId == filmId);
+
+            if(watchLater == null)
+            {
+                return NotFound(new { success = false, message = "Film izleme listenizde bulunamadı." });
+            }
+            _context.WatchLaters.Remove(watchLater);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+        [HttpGet("Ratings")]
+        public async Task<IActionResult> GetRatings()
+        {
+            var userId = GetUserId();
+            var ratingFilmIds = await _context.Ratings
+                .Where(w => w.UserId == userId)
+                .Select(w => w.FilmId)
+                .ToListAsync();
+            return Ok(ratingFilmIds);
+        }
+        [HttpGet("Ratings/{filmId}")]
+        public async Task<IActionResult> inRating(int filmId)
+        {
+            var userId = GetUserId();
+            var rating = await _context.Ratings
+                .FirstOrDefaultAsync(r => r.UserId == userId && r.FilmId == filmId);
+
+            if (rating != null)
+            {
+                return Ok(new { filmId = rating.FilmId, score = rating.Score });
+            }
+            return NotFound(new { message = "Bu film için bir puanlama bulunamadı." });
+        }
+        [HttpPost("Ratings")]
+        public async Task<IActionResult> AddRating([FromBody] RatingRequest request)
+        {
+            var userId = GetUserId();
+            var exists = await _context.Ratings
+                .AnyAsync(r => r.UserId == userId && r.FilmId == request.MovieId);
+
+            if (exists)
+            {
+                return Conflict(new { success = false, message = "Filmi zaten puanladın." });
+            }
+            var rating = new Rating
+            {
+                UserId = userId,
+                FilmId = request.MovieId,
+                Score = request.Rating
+            };
+            _context.Ratings.Add(rating);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetRatings), new { filmId = request.MovieId }, rating);
+        }
+
+        [HttpPut("Ratings")]
+        public async Task<IActionResult> UpdateRating([FromBody] RatingRequest request)
+        {
+            if (request.Rating < 1 || request.Rating > 10)
+            {
+                return BadRequest("Puan 1 ile 10 arasında olmalıdır.");
+            }
+
+            var userId = GetUserId();
+            var exists = await _context.Ratings
                 .FirstOrDefaultAsync(r => r.UserId == userId && r.FilmId == request.MovieId);
 
-            if (inRating == null)
+            if (exists == null)
             {
-                var rating = new Rating
-                {
-                    UserId = userId,
-                    FilmId = request.MovieId,
-                    Score= request.Rating
-                };
-                _context.Ratings.Add(rating);
-                
-            }
-            else
-            {
-                inRating.Score = request.Rating;
-                _context.Ratings.Update(inRating);
-
+                return NotFound("Güncellenecek puanlama bulunamadı.");
             }
 
+            exists.Score = request.Rating;
             await _context.SaveChangesAsync();
-            return Ok(new { success = true, message = "Filmi değerlendirdiniz." });
+
+            return Ok(new { message = "Puan güncellendi.", score = exists.Score });
         }
+
+        [HttpDelete("Ratings/{filmId}")]
+        public async Task<IActionResult> RemoveRating(int filmId)
+        {
+            var userId = GetUserId();
+            var rating = await _context.Ratings
+                .FirstOrDefaultAsync(r => r.UserId == userId && r.FilmId == filmId);
+
+            if (rating == null)
+            {
+                return NotFound(new { success = false, message = "Film izleme listenizde bulunamadı." });
+            }
+            _context.Ratings.Remove(rating);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
     }
+}
+public class InteractionRequest
+{
+    public int MovieId { get; set; }
+}
+public class RatingRequest
+{
+    public int MovieId { get; set; }
+    public int Rating { get; set; }
 }

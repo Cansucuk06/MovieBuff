@@ -37,8 +37,8 @@
                         <a class="nav-link active text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li class="nav-item text-white">
-                        <form class="d-flex" role="search">
-                            <input class="form-control me-2" type="search" aria-label="Search" placeholder="İstediğiniz filmi bulalım." style="width: 600px"/>
+                            <form class="d-flex" role="search" asp-controller="Search" asp-action="Results" method="get">
+                            <input class="form-control me-2" type="search" name="query" aria-label="Search" placeholder="İstediğiniz filmi bulalım." style="width: 600px"/>
                             <button type="submit" class="btn btn-success">Search</button>
                         </form>
                     </li>
