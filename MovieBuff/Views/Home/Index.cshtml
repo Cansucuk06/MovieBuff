@@ -27,7 +27,9 @@
                                         <div class="card w-100">
                                             <img src="@(backdropBaseUrl + movie.BackdropPath)" class="d-block w-100" alt="@movie.Title" style="object-fit:cover ; max-height:400px" />
                                             <div class="carousel-caption">
-                                                <h5>@movie.Title</h5>
+                                                <h5>
+                                                    <a asp-controller="Film" asp-action="Details" asp-route-id="@movie.Id" style="text-decoration-line: none; color: white;">@movie.Title</a>
+                                                </h5>
                                             </div>
                                         </div>
                                     </div>
@@ -108,7 +110,7 @@
                                 <img src="@(imageBaseUrl + movie.PosterPath)" class="card-img-top" alt="@movie.Title" />
                                 <div class="card-body">
                                     <h6 class="card-title">
-                                        <a asp-controller="Film" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a>
+                                        <a asp-controller="Film" asp-action="Details" asp-route-id="@movie.Id" style="text-decoration-line: none; color: black; font-size: 18px;">@movie.Title</a>
                                     </h6>
                                 </div>
                             </div>

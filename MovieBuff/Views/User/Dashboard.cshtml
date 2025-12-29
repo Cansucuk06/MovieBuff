@@ -9,15 +9,43 @@
         <h5 class="mt-5">Daha Sonra İzle</h5>
         @if (Model.WatchLaterMovies != null && Model.WatchLaterMovies.Any())
         {
-            <div class="row">
-                @foreach(var movie in Model.WatchLaterMovies)
-                {
-                    <div class="col-md-3 mb-4">
-                        <div class="card h-100">
-                            <img src="@(imageBaseUrl + movie.PosterPath)" class="img-fluid rounded" alt="@movie.Title">
-                        </div>
-                    </div>
-                }
+            <div id="watchLaterCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @{
+                        var movieGroups = Model.WatchLaterMovies.Select((movie, index) => new { movie, index })
+                            .GroupBy(x => x.index / 4)
+                            .Select(g => g.Select(x => x.movie)
+                            .ToList());
+                        bool FirstGroup = true;
+                        foreach (var group in movieGroups)
+                        {
+                            <div class="carousel-item @(FirstGroup ? "active" : "")">
+                                <div class="row">
+                                    @foreach (var movie in group)
+                                    {
+                                        <div class="col-md-3 mb-4">
+                                            <div class="card h-100">
+                                                <a asp-controller="Film" asp-action="Details" asp-route-id="@movie.Id">
+                                                    <img src="@(imageBaseUrl + movie.PosterPath)" class="img-fluid rounded" alt="@movie.Title">
+                                                    @movie.Title
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            FirstGroup = false;
+                        }
+                    }
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#watchLaterCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#watchLaterCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
         }
         else
@@ -29,15 +57,43 @@
         <h5 class="mt-5">Favorilerim</h5>
         @if (Model.FavoriteMovies != null && Model.FavoriteMovies.Any())
         {
-            <div class="row">
-                @foreach (var movie in Model.FavoriteMovies)
-                {
-                    <div class="col-md-3 mb-4">
-                        <div class="card h-100">
-                            <img src="@(imageBaseUrl + movie.PosterPath)" class="img-fluid rounded" alt="@movie.Title">
-                        </div>
-                    </div>
-                }
+            <div id="favoriteCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @{
+                        var movieGroups = Model.FavoriteMovies.Select((movie, index) => new { movie, index })
+                        .GroupBy(x => x.index / 4)
+                        .Select(g => g.Select(x => x.movie)
+                        .ToList());
+                        bool FirstGroup = true;
+                        foreach (var group in movieGroups)
+                        {
+                            <div class="carousel-item @(FirstGroup ? "active" : "")">
+                                <div class="row">
+                                    @foreach (var movie in group)
+                                    {
+                                        <div class="col-md-3 mb-4">
+                                            <div class="card h-100">
+                                                <a asp-controller="Film" asp-action="Details" asp-route-id="@movie.Id">
+                                                    <img src="@(imageBaseUrl + movie.PosterPath)" class="img-fluid rounded" alt="@movie.Title">
+                                                    @movie.Title
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            FirstGroup = false;
+                        }
+                    }
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#favoriteCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button"  data-bs-target="#favoriteCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
         }
         else

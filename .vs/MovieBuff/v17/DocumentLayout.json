@@ -1,12 +1,54 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|c:\\users\\cansu\\source\\repos\\moviebuff\\moviebuff\\views\\user\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|solutionrelative:moviebuff\\views\\user\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|c:\\users\\cansu\\source\\repos\\moviebuff\\moviebuff\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|solutionrelative:moviebuff\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "MovieBuff\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "MovieBuff\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAADAAAAAAAAAAAAAAAGkAAABMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-29T01:49:18.783Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Dashboard.cshtml",
+              "DocumentMoniker": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Views\\User\\Dashboard.cshtml",
+              "RelativeDocumentMoniker": "MovieBuff\\Views\\User\\Dashboard.cshtml",
+              "ToolTip": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Views\\User\\Dashboard.cshtml",
+              "RelativeToolTip": "MovieBuff\\Views\\User\\Dashboard.cshtml",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABcAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-29T01:21:10.858Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }
