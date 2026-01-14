@@ -1,4 +1,5 @@
 ﻿using MovieBuff.DTOs;
+using MovieBuff.Models;
 namespace MovieBuff.ViewModels
 {
     public class MovieDetailViewModel
@@ -7,5 +8,7 @@ namespace MovieBuff.ViewModels
         public bool IsInWatchLater { get; set; }
         public bool IsFavorite { get; set; }
         public int? UserRating { get; set; }
+
+        public List<UserList> UserLists { get; set; } = new List<UserList>();
     }
 }

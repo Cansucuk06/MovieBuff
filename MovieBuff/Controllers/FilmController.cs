@@ -5,6 +5,7 @@ using MovieBuff.Data;
 using System.Security.Claims;
 using MovieBuff.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using MovieBuff.Models;
 namespace MovieBuff.Controllers
 {
     public class FilmController: Controller
@@ -29,6 +30,7 @@ namespace MovieBuff.Controllers
             bool isFavorite = false;
             bool isInWatchLater = false;
             int? userRating = null;
+            List<UserList> userLists = new List<UserList>();
 
             if(User.Identity.IsAuthenticated)
             {
@@ -39,11 +41,14 @@ namespace MovieBuff.Controllers
                     .AnyAsync(w => w.UserId == userId && w.FilmId == id);
                 var rating = await _context.Ratings
                     .FirstOrDefaultAsync(r => r.UserId == userId && r.FilmId == id);
-                
-                if(rating != null)
+
+                if (rating != null)
                 {
                     userRating = rating.Score;
                 }
+
+                userLists = await _context.UserLists.Where(l => l.UserId == userId).ToListAsync();
+
             }
 
             var viewModel = new MovieDetailViewModel
@@ -51,7 +56,8 @@ namespace MovieBuff.Controllers
                 Movie = movie,
                 IsFavorite = isFavorite,
                 IsInWatchLater = isInWatchLater,
-                UserRating = userRating
+                UserRating = userRating,
+                UserLists = userLists
             };
             return View(viewModel);
         }

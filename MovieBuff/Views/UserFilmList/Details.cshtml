@@ -1,0 +1,43 @@
+﻿@model MovieBuff.ViewModels.UserListDetailViewModel
+@{
+    ViewData["Title"] = Model.ListInfo.Name;
+    var imageBaseUrl = "https://image.tmdb.org/t/p/w500";
+}
+
+<div class="container mt-4">
+    <h1 class="display-3">@Model.ListInfo.Name</h1>
+    @if (!string.IsNullOrEmpty(Model.ListInfo.Description))
+    {
+        <p class="lead text-muted">@Model.ListInfo.Description</p>
+    }
+    <div class="row">
+        @if (Model.Movies.Any())
+        {
+            @foreach (var movie in Model.Movies)
+            {
+                <div class="col-lg-2 col-md-3 col-sm-4 mb-4">
+                    <div class="card h-100">
+                        <a asp-controller="Film" asp-action="Details" asp-route-id="@movie.Id">
+                            <img src="@(movie.PosterPath != null ? imageBaseUrl + movie.PosterPath : "/images/default-poster.png")" class="card-img-top" alt="@movie.Title" />
+                        </a>
+                        <div class="card-body">
+                            <h6 class="card-title small">
+                                <a asp-controller="Film" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a>
+                            </h6>
+                        </div>
+                        <a class="btn btn-danger" asp-controller="UserFilmLists" asp-action="RemoveMovie" asp-route-listId="@Model.ListInfo.Id" asp-route-movieId="@movie.Id">
+                            <i class="bi bi-trash"></i>Listeden Kaldır</a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-info">Bu listede henüz film bulunmuyor.</div>
+        }
+    </div>
+
+    <div class="mt-4">
+        <a asp-controller="User" asp-action="Dashboard" class="btn btn-primary">Benim Sayfama Geri Dön</a>
+    </div>
+</div>

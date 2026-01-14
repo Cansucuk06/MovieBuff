@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using MovieBuff.Models;
 using MovieBuff.Data;
 using System.Security.Claims;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace MovieBuff.Controllers
 {
@@ -147,6 +148,62 @@ namespace MovieBuff.Controllers
             return NoContent();
         }
 
+        [HttpPost("UserList/AddItem")]
+        public async Task<IActionResult> AddToList([FromBody] AddToListRequest request)
+        {
+            var userId = GetUserId();
+            var listExists = await _context.UserLists
+                .AnyAsync(l => l.Id == request.ListId && l.UserId == userId);
+
+            if(!listExists)
+            {
+                return Forbid("Bu listeye erişiminiz yok.");
+            }
+
+            var movieExists = await _context.UserListItems
+                .AnyAsync(i => i.UserListId == request.ListId && i.FilmId == request.MovieId);
+
+            _context.UserListItems.Add(new UserListItem
+            {
+                UserListId = request.ListId,
+                FilmId = request.MovieId
+            });
+
+            if (movieExists)
+            {
+                return Conflict("Film zaten listede.");
+            }
+
+            var listItem = new UserListItem
+            {
+                UserListId = request.ListId,
+                FilmId = request.MovieId
+            };
+
+            _context.UserListItems.Add(listItem);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Film listeye eklendi." });
+        }
+
+        [HttpDelete("UserList/RemoveItem/{listId}/{movieId}")]
+        public async Task<IActionResult> RemoveFromList(int listId, int movieId)
+        {
+            var userId = GetUserId();
+            var listItems = await _context.UserListItems
+                .FirstOrDefaultAsync(li => li.UserListId == listId && li.FilmId == movieId && li.UserFilmList.UserId == userId);
+
+            if(listItems == null)
+            {
+                return NotFound("Film listede bulunamadı");
+            }
+
+            _context.UserListItems.Remove(listItems);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         [HttpGet("Ratings")]
         public async Task<IActionResult> GetRatings()
         {
@@ -235,6 +292,12 @@ namespace MovieBuff.Controllers
 }
 public class InteractionRequest
 {
+    public int MovieId { get; set; }
+}
+
+public class AddToListRequest
+{
+    public int ListId { get; set; }
     public int MovieId { get; set; }
 }
 public class RatingRequest

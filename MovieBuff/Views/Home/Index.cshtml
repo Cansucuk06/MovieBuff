@@ -107,7 +107,7 @@
                     {
                         <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                             <div class="card h-100">
-                                <img src="@(imageBaseUrl + movie.PosterPath)" class="card-img-top" alt="@movie.Title" />
+                                <img src="@(movie.PosterPath != null ? imageBaseUrl + movie.PosterPath : "images/defaultposter.jpg")"  class="card-img-top" alt="@movie.Title" />
                                 <div class="card-body">
                                     <h6 class="card-title">
                                         <a asp-controller="Film" asp-action="Details" asp-route-id="@movie.Id" style="text-decoration-line: none; color: black; font-size: 18px;">@movie.Title</a>

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieBuff.Data;
 
@@ -11,9 +12,11 @@ using MovieBuff.Data;
 namespace MovieBuff.Migrations
 {
     [DbContext(typeof(MovieBuffContext))]
-    partial class MovieBuffContextModelSnapshot : ModelSnapshot
+    [Migration("20260113165846_AddedUserFilmLists")]
+    partial class AddedUserFilmLists
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -318,7 +321,7 @@ namespace MovieBuff.Migrations
                     b.ToTable("Ratings");
                 });
 
-            modelBuilder.Entity("MovieBuff.Models.UserList", b =>
+            modelBuilder.Entity("MovieBuff.Models.UserFilmLists", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -327,6 +330,7 @@ namespace MovieBuff.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
@@ -346,7 +350,7 @@ namespace MovieBuff.Migrations
                     b.ToTable("UserLists");
                 });
 
-            modelBuilder.Entity("MovieBuff.Models.UserListItem", b =>
+            modelBuilder.Entity("MovieBuff.Models.UserListItems", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -357,12 +361,15 @@ namespace MovieBuff.Migrations
                     b.Property<int>("FilmId")
                         .HasColumnType("int");
 
+                    b.Property<int>("UserFilmListId")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserListId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserListId");
+                    b.HasIndex("UserFilmListId");
 
                     b.ToTable("UserListItems");
                 });
@@ -462,7 +469,7 @@ namespace MovieBuff.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MovieBuff.Models.UserList", b =>
+            modelBuilder.Entity("MovieBuff.Models.UserFilmLists", b =>
                 {
                     b.HasOne("MovieBuff.Models.ApplicationUser", "User")
                         .WithMany()
@@ -473,11 +480,11 @@ namespace MovieBuff.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MovieBuff.Models.UserListItem", b =>
+            modelBuilder.Entity("MovieBuff.Models.UserListItems", b =>
                 {
-                    b.HasOne("MovieBuff.Models.UserList", "UserFilmList")
+                    b.HasOne("MovieBuff.Models.UserFilmLists", "UserFilmList")
                         .WithMany("ListItems")
-                        .HasForeignKey("UserListId")
+                        .HasForeignKey("UserFilmListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -495,7 +502,7 @@ namespace MovieBuff.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MovieBuff.Models.UserList", b =>
+            modelBuilder.Entity("MovieBuff.Models.UserFilmLists", b =>
                 {
                     b.Navigation("ListItems");
                 });

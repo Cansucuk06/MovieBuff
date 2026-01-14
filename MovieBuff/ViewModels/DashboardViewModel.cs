@@ -1,4 +1,5 @@
 ﻿using MovieBuff.DTOs;
+using MovieBuff.Models;
 namespace MovieBuff.ViewModels
 {
     public class DashboardViewModel
@@ -6,5 +7,6 @@ namespace MovieBuff.ViewModels
         public List<MovieResultDto> WatchLaterMovies { get; set; }
         public List<MovieResultDto> FavoriteMovies { get; set; }
         public List<UserRatingViewModel> LastRatings { get; set; }
+        public List<UserList> UserLists { get; set; } 
     }
 }

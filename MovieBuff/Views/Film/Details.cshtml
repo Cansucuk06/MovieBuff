@@ -122,6 +122,26 @@
                                     }
                                 </div>
 
+                                <div class="col">
+                                    @if (Model.UserLists.Any())
+                                    {
+                                        <form id="addToListForm" class="input-group" style="max-width: 300px;">
+                                            <select id="userListSelect" class="form-select">
+                                                <option selected disabled>Bir liste seçin...</option>
+                                                @foreach (var list in Model.UserLists)
+                                                {
+                                                    <option value="@list.Id">@list.Name</option>
+                                                }
+                                            </select>
+                                            <button type="submit" class="btn btn-primary">Ekle</button>
+                                        </form>
+                                        <div id="addToListMessage" class="mt-2"></div>
+                                    }else{
+                                        <a asp-controller="UserFilmList" class="btn btn-success" asp-action="Create">Listeye Ekle</a>
+                                    }
+                                    
+                                </div>
+
                                 <div class="row mb-3">
                                     <h3 class="text-white">Puan Ver</h3>
                                     <div id="star-rating" data-filmid="@Model.Movie.Id" data-current-rating="@Model.UserRating">
@@ -199,6 +219,42 @@
                         }
                     },
                     error: function(xhr) { alert("Hata: " + xhr.responseText); }
+                });
+            });
+
+            $("#addToListForm").submit(function(e) {
+
+                // Formun sayfayı yeniden yüklemesini ENGELLİYORUZ. Bu en önemli satır.
+                e.preventDefault();
+
+                var selectedListId = $("#userListSelect").val();
+                var filmId = @Model.Movie.Id;
+                var messageDiv = $("#addToListMessage");
+
+                if (!selectedListId) {
+                    messageDiv.text("Lütfen bir liste seçin.").removeClass("text-success").addClass("text-danger");
+                    return;
+                }
+
+                $.ajax({
+                    url: '/api/Interactions/UserList/AddItem',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ listId: parseInt(selectedListId), movieId: filmId }),
+                    success: function(response) {
+                        messageDiv.text(response.message).removeClass("text-danger").addClass("text-success");
+                        // Formu temizle (isteğe bağlı)
+                        $("#userListSelect").prop('selectedIndex', 0);
+                    },
+                    error: function(xhr) {
+                        var errorMsg = "Bir hata oluştu.";
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            errorMsg = xhr.responseJSON.message;
+                        } else if(xhr.responseJSON) {
+                            errorMsg = xhr.responseJSON;
+                        }
+                        messageDiv.text(errorMsg).removeClass("text-success").addClass("text-danger");
+                    }
                 });
             });
 

@@ -29,21 +29,32 @@ public class UserController: Controller
     public async Task<IActionResult> Dashboard()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var watchLaterIds = await _context.WatchLaters
+        var watchLaterTask = await _context.WatchLaters
             .Where(w => w.UserId == userId)
             .Select(w => w.FilmId)
             .ToListAsync();
 
-        var favoriteIds = await _context.Favorites
+        var favoriteTask = await _context.Favorites
             .Where(f => f.UserId == userId)
             .Select(f => f.FilmId)
             .ToListAsync();
 
-        var ratingIds = await _context.Ratings
+        var userListTask = await _context.UserLists
+            .Where(l => l.UserId == userId)
+            .OrderBy(l => l.Name)
+            .ToListAsync();
+
+        var ratingTask = await _context.Ratings
             .Where(r => r.UserId == userId)
             .OrderByDescending(r => r.RatingId)
             .Take(5)
             .ToListAsync();
+
+
+        var watchLaterIds = watchLaterTask;
+        var favoriteIds = favoriteTask;
+        var ratingIds =  ratingTask;
+        var userLists = userListTask;
 
         var watchLaterMovies = new List<MovieResultDto>();
         foreach(var id in watchLaterIds)
@@ -93,12 +104,14 @@ public class UserController: Controller
                 });
             }
         }
+        
 
         var dashboardViewModel = new DashboardViewModel
         {
             WatchLaterMovies = watchLaterMovies,
             FavoriteMovies = favoriteMovies,
-            LastRatings = lastRatings
+            LastRatings = lastRatings,
+            UserLists = userLists
         };
 
         return View(dashboardViewModel);

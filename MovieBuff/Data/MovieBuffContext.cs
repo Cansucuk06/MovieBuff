@@ -14,7 +14,8 @@ namespace MovieBuff.Data
         public DbSet<MovieBuff.Models.Favorite> Favorites { get; set; } = default!;
         public DbSet<MovieBuff.Models.Rating> Ratings { get; set; } = default!;
         public DbSet<MovieBuff.Models.WatchLater> WatchLaters { get; set; } = default!;
-
+        public DbSet<UserList> UserLists { get; set; }
+        public DbSet<UserListItem> UserListItems { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
