@@ -163,12 +163,6 @@ namespace MovieBuff.Controllers
             var movieExists = await _context.UserListItems
                 .AnyAsync(i => i.UserListId == request.ListId && i.FilmId == request.MovieId);
 
-            _context.UserListItems.Add(new UserListItem
-            {
-                UserListId = request.ListId,
-                FilmId = request.MovieId
-            });
-
             if (movieExists)
             {
                 return Conflict("Film zaten listede.");
@@ -186,7 +180,8 @@ namespace MovieBuff.Controllers
             return Ok(new { message = "Film listeye eklendi." });
         }
 
-        [HttpDelete("UserList/RemoveItem/{listId}/{movieId}")]
+        [HttpPost]
+        [Route("Interactions/RemoveFromList/{listId}/{movieId}")]
         public async Task<IActionResult> RemoveFromList(int listId, int movieId)
         {
             var userId = GetUserId();
@@ -201,7 +196,7 @@ namespace MovieBuff.Controllers
             _context.UserListItems.Remove(listItems);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return RedirectToAction("Details", "UserFilmList", new { id = listId });
         }
 
         [HttpGet("Ratings")]

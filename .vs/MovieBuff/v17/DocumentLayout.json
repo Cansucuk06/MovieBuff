@@ -3,28 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|c:\\users\\cansu\\source\\repos\\moviebuff\\moviebuff\\views\\user\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|solutionrelative:moviebuff\\views\\user\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|c:\\users\\cansu\\source\\repos\\moviebuff\\moviebuff\\views\\userfilmlist\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|solutionrelative:moviebuff\\views\\userfilmlist\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|c:\\users\\cansu\\source\\repos\\moviebuff\\moviebuff\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|solutionrelative:moviebuff\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|c:\\users\\cansu\\source\\repos\\moviebuff\\moviebuff\\views\\user\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|solutionrelative:moviebuff\\views\\user\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|c:\\users\\cansu\\source\\repos\\moviebuff\\moviebuff\\views\\userfilmlist\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|solutionrelative:moviebuff\\views\\userfilmlist\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|c:\\users\\cansu\\source\\repos\\moviebuff\\moviebuff\\controllers\\interactionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|solutionrelative:moviebuff\\controllers\\interactionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|c:\\users\\cansu\\source\\repos\\moviebuff\\moviebuff\\viewmodels\\userlistcreateviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|solutionrelative:moviebuff\\viewmodels\\userlistcreateviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|c:\\users\\cansu\\source\\repos\\moviebuff\\moviebuff\\views\\film\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|solutionrelative:moviebuff\\views\\film\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|c:\\users\\cansu\\source\\repos\\moviebuff\\moviebuff\\controllers\\userfilmlistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3CC351F-BEAE-4E2C-990F-F1BEC76AFE3F}|MovieBuff\\MovieBuff.csproj|solutionrelative:moviebuff\\controllers\\userfilmlistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,80 +26,59 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
+              "Title": "InteractionsController.cs",
+              "DocumentMoniker": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Controllers\\InteractionsController.cs",
+              "RelativeDocumentMoniker": "MovieBuff\\Controllers\\InteractionsController.cs",
+              "ToolTip": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Controllers\\InteractionsController.cs",
+              "RelativeToolTip": "MovieBuff\\Controllers\\InteractionsController.cs",
+              "ViewState": "AgIAAKsAAAAAAAAAAAAQwLcAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-15T10:10:27.451Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserFilmListController.cs",
+              "DocumentMoniker": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Controllers\\UserFilmListController.cs",
+              "RelativeDocumentMoniker": "MovieBuff\\Controllers\\UserFilmListController.cs",
+              "ToolTip": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Controllers\\UserFilmListController.cs",
+              "RelativeToolTip": "MovieBuff\\Controllers\\UserFilmListController.cs",
+              "ViewState": "AgIAAG0AAAAAAAAAAAAIwH4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-15T10:02:36.872Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Dashboard.cshtml",
               "DocumentMoniker": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Views\\User\\Dashboard.cshtml",
               "RelativeDocumentMoniker": "MovieBuff\\Views\\User\\Dashboard.cshtml",
               "ToolTip": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Views\\User\\Dashboard.cshtml",
               "RelativeToolTip": "MovieBuff\\Views\\User\\Dashboard.cshtml",
-              "ViewState": "AgIAADYAAAAAAAAAAAAAAGoAAAB3AAAAAAAAAA==",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAAAHkAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-01-14T15:33:46.473Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Details.cshtml",
               "DocumentMoniker": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Views\\UserFilmList\\Details.cshtml",
               "RelativeDocumentMoniker": "MovieBuff\\Views\\UserFilmList\\Details.cshtml",
               "ToolTip": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Views\\UserFilmList\\Details.cshtml",
               "RelativeToolTip": "MovieBuff\\Views\\UserFilmList\\Details.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-01-14T15:31:03.169Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "UserListCreateViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\ViewModels\\UserListCreateViewModel.cs",
-              "RelativeDocumentMoniker": "MovieBuff\\ViewModels\\UserListCreateViewModel.cs",
-              "ToolTip": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\ViewModels\\UserListCreateViewModel.cs",
-              "RelativeToolTip": "MovieBuff\\ViewModels\\UserListCreateViewModel.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAApwAsAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-14T15:14:30.45Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Create.cshtml",
-              "DocumentMoniker": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Views\\UserFilmList\\Create.cshtml",
-              "RelativeDocumentMoniker": "MovieBuff\\Views\\UserFilmList\\Create.cshtml",
-              "ToolTip": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Views\\UserFilmList\\Create.cshtml",
-              "RelativeToolTip": "MovieBuff\\Views\\UserFilmList\\Create.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAACAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-01-14T14:16:24.133Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "UserController.cs",
-              "DocumentMoniker": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Controllers\\UserController.cs",
-              "RelativeDocumentMoniker": "MovieBuff\\Controllers\\UserController.cs",
-              "ToolTip": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Controllers\\UserController.cs",
-              "RelativeToolTip": "MovieBuff\\Controllers\\UserController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHQAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-14T13:40:50.711Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Details.cshtml",
-              "DocumentMoniker": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Views\\Film\\Details.cshtml",
-              "RelativeDocumentMoniker": "MovieBuff\\Views\\Film\\Details.cshtml",
-              "ToolTip": "C:\\Users\\cansu\\source\\repos\\MovieBuff\\MovieBuff\\Views\\Film\\Details.cshtml",
-              "RelativeToolTip": "MovieBuff\\Views\\Film\\Details.cshtml",
-              "ViewState": "AgIAAOYAAAAAAAAAAAAwwPgAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-01-14T12:02:00.155Z"
+              "WhenOpened": "2026-01-14T15:31:03.169Z",
+              "EditorCaption": ""
             }
           ]
         }
